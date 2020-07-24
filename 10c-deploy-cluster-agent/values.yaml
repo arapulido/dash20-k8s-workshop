@@ -621,7 +621,10 @@ clusterAgent:
   ## @param volumes - list of objects - optional
   ## Specify additional volumes to mount in the cluster-agent container
   #
-  volumes: []
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-keys
   #   - hostPath:
   #       path: <HOST_PATH>
   #     name: <VOLUME_NAME>
@@ -629,7 +632,10 @@ clusterAgent:
   ## @param volumeMounts - list of objects - optional
   ## Specify additional volumes to mount in the cluster-agent container
   #
-  volumeMounts: []
+  volumeMounts:
+    - mountPath: /keys
+      name: etcd-keys
+      readOnly: true
   #   - name: <VOLUME_NAME>
   #     mountPath: <CONTAINER_PATH>
   #     readOnly: true
