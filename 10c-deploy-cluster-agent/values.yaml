@@ -938,15 +938,20 @@ agents:
   ## @param volumes - list of objects - optional
   ## Specify additional volumes to mount in the dd-agent container
   #
-  volumes: []
   #   - hostPath:
   #       path: <HOST_PATH>
   #     name: <VOLUME_NAME>
-
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-keys
   ## @param volumeMounts - list of objects - optional
   ## Specify additional volumes to mount in the dd-agent container
   #
-  volumeMounts: []
+  volumeMounts:
+    - mountPath: /keys
+      name: etcd-keys
+      readOnly: true
   #   - name: <VOLUME_NAME>
   #     mountPath: <CONTAINER_PATH>
   #     readOnly: true
@@ -1214,20 +1219,25 @@ clusterChecksRunner:
   #     value: <ENV_VAR_VALUE>
 
   ## @param volumes - list of objects - optional
-  ## Specify additional volumes to mount in the cluster checks container
+  ## Specify additional volumes to mount in the dd-agent container
   #
-  volumes: []
   #   - hostPath:
   #       path: <HOST_PATH>
   #     name: <VOLUME_NAME>
-
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-keys
   ## @param volumeMounts - list of objects - optional
-  ## Specify additional volumes to mount in the cluster checks container
+  ## Specify additional volumes to mount in the dd-agent container
   #
-  volumeMounts: []
+  volumeMounts:
+    - mountPath: /keys
+      name: etcd-keys
+      readOnly: true
   #   - name: <VOLUME_NAME>
   #     mountPath: <CONTAINER_PATH>
-  #     readOnly: true
+  #     readOnly: true## @param volumes - list of objects - optional
 
 kube-state-metrics:
   rbac:

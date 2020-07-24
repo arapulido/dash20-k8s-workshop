@@ -937,8 +937,10 @@ agents:
 
   ## @param volumes - list of objects - optional
   ## Specify additional volumes to mount in the dd-agent container
-  #
-  volumes: []
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-keys
   #   - hostPath:
   #       path: <HOST_PATH>
   #     name: <VOLUME_NAME>
@@ -946,10 +948,13 @@ agents:
   ## @param volumeMounts - list of objects - optional
   ## Specify additional volumes to mount in the dd-agent container
   #
-  volumeMounts: []
+  volumeMounts:
+    - mountPath: /keys
+      name: etcd-keys
+      readOnly: true
   #   - name: <VOLUME_NAME>
   #     mountPath: <CONTAINER_PATH>
-  #     readOnly: true
+  #     readOnly: true #
 
   ## @param useHostNetwork - boolean - optional
   ## Bind ports on the hostNetwork. Useful for CNI networking where hostPort might
@@ -1215,19 +1220,24 @@ clusterChecksRunner:
 
   ## @param volumes - list of objects - optional
   ## Specify additional volumes to mount in the cluster checks container
-  #
-  volumes: []
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-keys
   #   - hostPath:
   #       path: <HOST_PATH>
   #     name: <VOLUME_NAME>
 
   ## @param volumeMounts - list of objects - optional
-  ## Specify additional volumes to mount in the cluster checks container
+  ## Specify additional volumes to mount in the dd-agent container
   #
-  volumeMounts: []
+  volumeMounts:
+    - mountPath: /keys
+      name: etcd-keys
+      readOnly: true
   #   - name: <VOLUME_NAME>
   #     mountPath: <CONTAINER_PATH>
-  #     readOnly: true
+  #     readOnly: true #
 
 kube-state-metrics:
   rbac:
